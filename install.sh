@@ -104,6 +104,7 @@ fi
 
 INST="$MC_HOME/data/instances/Minecraft $MC_VERSION"
 mkdir -p "$INST/.minecraft"/{mods,saves,resourcepacks,logs,crash-reports}
+install -m 0644 "$SRC/templates/icon.png" "$INST/.minecraft/icon.png"
 if [ ! -f "$INST/instance.cfg" ]; then
     cat > "$INST/instance.cfg" <<EOF
 InstanceType=OneSix
