@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=UltimMC
+GenericName=Lanzador de Minecraft
+Comment=Abrir el launcher UltimMC (todo en ~/minecraft)
+Exec=__MC_HOME__/bin/ultimmc
+TryExec=__MC_HOME__/bin/ultimmc
+Icon=__MC_HOME__/data/instances/Minecraft 1.21.8/.minecraft/icon.png
+Terminal=false
+Categories=Game;
+StartupNotify=true

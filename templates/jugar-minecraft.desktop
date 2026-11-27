@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Jugar Minecraft 1.21.8
+GenericName=Minecraft
+Comment=Iniciar Minecraft 1.21.8 en modo offline con UltimMC
+Exec=__MC_HOME__/bin/jugar-minecraft
+TryExec=__MC_HOME__/bin/jugar-minecraft
+Icon=__MC_HOME__/data/instances/Minecraft 1.21.8/.minecraft/icon.png
+Terminal=false
+Categories=Game;
+StartupNotify=true
