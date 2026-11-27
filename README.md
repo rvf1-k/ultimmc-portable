@@ -1,6 +1,8 @@
 # ultimmc-portable
 
-Instalador **sin sudo** de [UltimMC](https://ultimmc.com/) + Minecraft **1.21.8** para Ubuntu 22.04 u otros sistema con GLIBC ≤ 2.37 y Java 21. Todo se instala en `~/minecraft`.
+Instalador **sin sudo** de [UltimMC](https://ultimmc.com/) + Minecraft **1.21.8** para Ubuntu 22.04 u otros sistemas con GLIBC ≤ 2.37 y Java 21. Todo se instala en `~/minecraft`.
+
+**No hay ningún usuario ni perfil preconfigurado**: cada persona elige su propio nombre de jugador la primera vez que abre el launcher.
 
 ## Uso rápido
 
@@ -21,17 +23,28 @@ Variables opcionales:
 | Variable | Por defecto | Uso |
 |---|---|---|
 | `MC_HOME` | `~/minecraft` | Destino de la instalación. |
-| `MC_USERNAME` | `RafMorriq` | Nombre de la cuenta local/offline. |
 | `JAVA_PATH` | `/usr/bin/java` | Java 21 (o superior compatible). |
-| `MC_ASSETS_REPO` | `rvf1-k/ultimmc-portable` | Repo cuyo workflow baja los assets. |
+| `MC_ASSETS_REPO` | el repo del que clonaste (`origin`) | Repo cuyo workflow baja los assets; cámbialo si haces fork. |
 | `SKIP_ASSETS` | `0` | `1` para no descargar los 442 MB de assets. |
 | `MC_LAUNCH` | `0` | `1` para abrir el juego al terminar. |
 
 Ejemplo:
 
 ```bash
-MC_USERNAME=Rafa MC_LAUNCH=1 bash install.sh
+MC_LAUNCH=1 bash install.sh
 ```
+
+## Crear tu cuenta local (primer arranque)
+
+El instalador **no crea ninguna cuenta**. Haz esto una vez, después de instalar:
+
+1. Abre el launcher: `~/minecraft/bin/ultimmc` (o el acceso “UltimMC”).
+2. En la columna izquierda entra en **Accounts / Cuentas**.
+3. Pulsa **Add Local** (en español, *Añadir local*).
+4. Escribe el nombre con el que quieres jugar y confirma con **OK**.
+5. Cierra el launcher. Ya puedes usar **“Jugar Minecraft 1.21.8”** o pulsar **Launch** en el launcher.
+
+Es una cuenta *Local*: no pide contraseña, no usa Microsoft/Mojang y sirve para jugar en solitario. Tu mundo y tu inventario quedan asociados a ese nombre, así que elige uno que te guste: cambiarlo después crea un personaje distinto. Si el launcher pregunta por una cuenta al lanzar, vuelve al paso 2 y añade una.
 
 ## Requisitos
 
@@ -39,6 +52,17 @@ MC_USERNAME=Rafa MC_LAUNCH=1 bash install.sh
 - Java 21 instalado (el juego se lanza con `/usr/bin/java` por defecto).
 - `gh` autenticado **solo si** la red bloquea `resources.download.minecraft.net`: `gh auth login`.
 - Sin sudo: todos los archivos se crean en el HOME del usuario.
+
+## Compartir / instalar en otra red
+
+El repo es público. Si en tu red los assets se descargan directamente, no necesitas GitHub ni `gh`. Si están bloqueados (como en el centro donde se creó), haz **fork** de este repo, clona tu fork y, si hace falta, indica tu repo con:
+
+```bash
+gh auth login
+MC_ASSETS_REPO=tu-usuario/ultimmc-portable bash install.sh
+```
+
+El workflow `fetch-assets.yml` se ejecuta en tu fork y los artefactos se bajan a tu ordenador.
 
 ## Qué contiene el repo
 
@@ -68,7 +92,7 @@ El launcher se tomó del artifact oficial de `UltimMC/Launcher` en GitHub Action
 
 - Cuenta **Local**: se juega offline/en solitario. No funcionan skins de Microsoft ni servidores con `online-mode=true`.
 - El idioma del juego queda en inglés (`-Duser.language=en`); el launcher sí se configura en `es_ES`.
-- Si usas otro nombre de usuario, cambia `MC_USERNAME` en la instalación. No cambies el UUID generado a mano: se deriva de `OfflinePlayer:<nombre>`.
+- El nombre de jugador lo elige cada persona en el launcher; no viene del usuario del sistema ni de este repo.
 
 ## Reinstalación / actualización
 

@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 # Instala UltimMC + Minecraft 1.21.8 en ~/minecraft sin sudo.
 # Uso: bash install.sh
-# Variables opcionales: MC_HOME, MC_USERNAME, JAVA_PATH, MC_ASSETS_REPO, SKIP_ASSETS=1, MC_LAUNCH=1
+# Variables opcionales: MC_HOME, JAVA_PATH, MC_ASSETS_REPO, SKIP_ASSETS=1, MC_LAUNCH=1
 set -euo pipefail
 
 MC_HOME="${MC_HOME:-$HOME/minecraft}"
 SRC="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-MC_USERNAME="${MC_USERNAME:-RafMorriq}"
 JAVA_PATH="${JAVA_PATH:-/usr/bin/java}"
-ASSETS_REPO="${MC_ASSETS_REPO:-rvf1-k/ultimmc-portable}"
+# Por defecto, el repo del que se clonó este instalador (útil si haces fork).
+DETECTED_REPO="$(git -C "$SRC" remote get-url origin 2>/dev/null | sed -n 's|.*github\.com[:/]\([^/]*/[^/.]*\)\(\.git\)\?$|\1|p')"
+ASSETS_REPO="${MC_ASSETS_REPO:-${DETECTED_REPO:-rvf1-k/ultimmc-portable}}"
 MC_VERSION="1.21.8"
 
 say() { printf '\033[1;32m==>\033[0m %s\n' "$*"; }
@@ -70,37 +71,9 @@ if [ ! -f "$MC_HOME/data/ultimmc.cfg" ]; then
         "$SRC/templates/ultimmc.cfg" > "$MC_HOME/data/ultimmc.cfg"
 fi
 
-if [ ! -f "$MC_HOME/data/accounts.json" ]; then
-    say "Creando cuenta local $MC_USERNAME"
-    python3 - "$MC_HOME/data/accounts.json" "$MC_USERNAME" <<'PY'
-import hashlib, json, secrets, sys, time
-
-path, name = sys.argv[1], sys.argv[2]
-raw = bytearray.fromhex(hashlib.md5(("OfflinePlayer:" + name).encode("utf-8")).hexdigest())
-raw[6] = (raw[6] & 0x0f) | 0x30       # UUID v3
-raw[8] = (raw[8] & 0x3f) | 0x80       # variante RFC 4122
-uid = bytes(raw).hex()
-data = {
-    "accounts": [{
-        "active": True,
-        "profile": {
-            "capes": [],
-            "id": uid,
-            "name": name,
-            "skin": {"id": "", "url": "", "variant": ""},
-        },
-        "type": "Local",
-        "ygg": {
-            "extra": {"clientToken": secrets.token_hex(16), "userName": name},
-            "iat": int(time.time()),
-        },
-    }],
-    "formatVersion": 3,
-}
-with open(path, "w", encoding="utf-8") as f:
-    json.dump(data, f, indent=4)
-PY
-fi
+# No se crea ninguna cuenta: cada persona elige su nombre al abrir el launcher.
+# Instrucciones en README.md (apartado "Crear tu cuenta local").
+printf '%s\n' "$ASSETS_REPO" > "$MC_HOME/data/assets-repo"
 
 INST="$MC_HOME/data/instances/Minecraft $MC_VERSION"
 mkdir -p "$INST/.minecraft"/{mods,saves,resourcepacks,logs,crash-reports}
@@ -173,6 +146,9 @@ say "Listo"
 echo "  Jugar:      $MC_HOME/bin/jugar-minecraft"
 echo "  Launcher:   $MC_HOME/bin/ultimmc"
 echo "  Documentos: $MC_HOME/README.md"
+echo
+echo "  PRIMER ARRANQUE: abre el launcher y crea tu cuenta Local (Add Local)."
+echo "  No hay cuenta ni nombre preconfigurado. Ver README.md."
 if [ "${MC_LAUNCH:-0}" = "1" ]; then
     exec "$MC_HOME/bin/jugar-minecraft"
 fi

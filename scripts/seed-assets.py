@@ -17,11 +17,26 @@ import urllib.request
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 MC_HOME = os.environ.get("MC_HOME", os.path.expanduser("~/minecraft"))
-REPO = os.environ.get("MC_ASSETS_REPO", "rvf1-k/ultimmc-portable")
 WORKFLOW = "fetch-assets.yml"
 INDEX = os.path.join(MC_HOME, "data", "assets", "indexes", "26.json")
 OBJECTS = os.path.join(MC_HOME, "data", "assets", "objects")
 BASE = "https://resources.download.minecraft.net"
+
+
+def assets_repo():
+    """Repo con el workflow de assets: variable de entorno > config > este repo."""
+    if os.environ.get("MC_ASSETS_REPO"):
+        return os.environ["MC_ASSETS_REPO"].strip()
+    cfg = os.path.join(MC_HOME, "data", "assets-repo")
+    if os.path.exists(cfg):
+        with open(cfg, encoding="utf-8") as f:
+            value = f.read().strip()
+        if value:
+            return value
+    return "rvf1-k/ultimmc-portable"
+
+
+REPO = assets_repo()
 
 
 def gh(*args):

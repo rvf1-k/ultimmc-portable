@@ -10,7 +10,18 @@ Instalación lista para jugar **sin sudo**. Todo (launcher, datos, juegos, logs)
   - `~/minecraft/bin/jugar-minecraft` → iniciar la partida directamente.
   - `~/minecraft/bin/ultimmc` → abrir el launcher.
 
-En el launcher, selecciona **Minecraft 1.21.8** y pulsa el botón de **Launch** (o el de launch offline). La cuenta local se llama **RafMorriq**.
+En el launcher, selecciona **Minecraft 1.21.8** y pulsa el botón de **Launch** (o el de launch offline).
+
+## Crear tu cuenta local (primer arranque)
+
+El instalador no crea ninguna cuenta: cada persona elige su propio nombre.
+
+1. Abre `~/minecraft/bin/ultimmc` (acceso “UltimMC”).
+2. En la columna izquierda entra en **Accounts / Cuentas**.
+3. Pulsa **Add Local** (*Añadir local*) y escribe el nombre con el que quieres jugar.
+4. Confirma con **OK** y cierra el launcher.
+
+Ya puedes jugar con **“Jugar Minecraft 1.21.8”**. Es una cuenta *Local*: sin contraseña, sin Microsoft y solo en solitario. Tu mundo e inventario quedan ligados a ese nombre, así que no lo cambies después si quieres conservar la partida.
 
 ## Qué hay instalado
 
@@ -21,14 +32,14 @@ En el launcher, selecciona **Minecraft 1.21.8** y pulsa el botón de **Launch** 
 | `~/minecraft/bin/seed-game-files.py` | Vuelve a descargar/verificar JAR, librerías y asset index si faltan. |
 | `~/minecraft/bin/seed-assets.py` | Vuelve a descargar y verificar los 4273 assets (usa GitHub Actions si la red bloquea Mojang). |
 | `~/minecraft/UltimMC/` | Launcher oficial (build de GitHub Actions) + glibc portable en `glibc/`. |
-| `~/minecraft/data/` | Configuración, cuenta, meta, librerías, assets e instancias del juego. |
+| `~/minecraft/data/` | Configuración, meta, librerías, assets e instancias del juego. |
 | `~/minecraft/data/instances/Minecraft 1.21.8/` | Instancia de Minecraft 1.21.8 (Java 21). |
 | `~/minecraft/logs/` | Logs del launcher y del juego. |
 | `~/.local/share/applications/` | Enlaces a los dos `.desktop` (los archivos originales están en `~/minecraft`). |
 
 ## Detalles de la configuración
 
-- **Cuenta:** `Local` (offline) con nombre `RafMorriq`. No usa Microsoft/Mojang, no pide contraseña y sirve para jugar en solitario. El autenticador local se implementa con `authlib-injector 1.2.8`, guardado en `~/minecraft/data/injectors/`.
+- **Cuenta:** `Local` (offline) con el nombre que elijas al abrir el launcher por primera vez. No usa Microsoft/Mojang, no pide contraseña y sirve para jugar en solitario. El autenticador local se implementa con `authlib-injector 1.2.8`, guardado en `~/minecraft/data/injectors/`.
 - **Memoria:** mínimo 1024 MB, máximo 4096 MB.
 - **Java:** `/usr/bin/java` (OpenJDK 21,compatible con Minecraft 1.21.8).
 - **Idioma del launcher:** español (`es_ES`); el juego se ejecuta con `-Duser.language=en` porque el pack de idioma español no está incluido en el index de assets usado.
@@ -65,4 +76,4 @@ cd ultimmc-portable
 bash install.sh
 ```
 
-Si la red permite el host de assets, `seed-assets.py` los baja directamente; si no, usa `gh` (hay que hacer `gh auth login` primero).
+Si la red permite el host de assets, `seed-assets.py` los baja directamente; si no, usa `gh` (hay que hacer `gh auth login` primero) con el repo indicado en `~/minecraft/data/assets-repo`. Si haces fork del repo para compartirlo, cambia ese archivo por `tu-usuario/ultimmc-portable` o reinstala con `MC_ASSETS_REPO=tu-usuario/ultimmc-portable`.
