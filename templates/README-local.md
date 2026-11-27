@@ -17,7 +17,7 @@ En el launcher, selecciona **Minecraft 1.21.8** y pulsa el botón de **Launch** 
 El instalador no crea ninguna cuenta: cada persona elige su propio nombre.
 
 1. Abre `~/minecraft/bin/ultimmc` (acceso “UltimMC”).
-2. En la columna izquierda entra en **Accounts / Cuentas**.
+2. En la barra superior pulsa **Profiles** → **Manage Accounts** (*Gestionar cuentas*).
 3. Pulsa **Add Local** (*Añadir local*) y escribe el nombre con el que quieres jugar.
 4. Confirma con **OK** y cierra el launcher.
 

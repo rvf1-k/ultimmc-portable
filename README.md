@@ -39,8 +39,8 @@ MC_LAUNCH=1 bash install.sh
 El instalador **no crea ninguna cuenta**. Haz esto una vez, después de instalar:
 
 1. Abre el launcher: `~/minecraft/bin/ultimmc` (o el acceso “UltimMC”).
-2. En la columna izquierda entra en **Accounts / Cuentas**.
-3. Pulsa **Add Local** (en español, *Añadir local*).
+2. En la barra superior pulsa **Profiles** → **Manage Accounts** (*Gestionar cuentas*).
+3. En la página de cuentas pulsa **Add Local** (*Añadir local*).
 4. Escribe el nombre con el que quieres jugar y confirma con **OK**.
 5. Cierra el launcher. Ya puedes usar **“Jugar Minecraft 1.21.8”** o pulsar **Launch** en el launcher.
 
